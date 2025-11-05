@@ -25,7 +25,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: relative;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
         }
 
@@ -35,6 +35,8 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            flex: 1;
         }
 
         .admin-btn {
@@ -48,6 +50,8 @@
             font-weight: 600;
             font-size: clamp(0.8rem, 2vw, 1rem);
             white-space: nowrap;
+            position: absolute;
+            right: 20px;
         }
 
         .admin-btn:hover {
@@ -562,6 +566,21 @@
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px 10px;
+            }
+
+            header h1 {
+                margin-bottom: 10px;
+            }
+
+            .admin-btn {
+                position: static;
+                right: auto;
+            }
+
             .menu-toggle {
                 display: block;
                 margin: 0 auto;
@@ -656,8 +675,8 @@
         <section id="biografia">
             <h2>Sobre Mí</h2>
             <div class="bio-content">
-                <p></p>
-                <p></p>
+                <p>El arte de los telares es una tradición milenaria que ha sido transmitida de generación en generación. Cada hilo tejido cuenta una historia, cada color representa una emoción, y cada diseño refleja la cultura y el alma de quien lo crea.</p>
+                <p>En este espacio comparto mi pasión por el arte textil, manteniendo viva la tradición y creando piezas únicas que combinan técnicas ancestrales con diseños contemporáneos.</p>
             </div>
         </section>
 
@@ -675,8 +694,8 @@
                         </svg>
                     </div>
                     <div class="contact-info">
-                        <h3>paulina.chiscao@gmail.com</h3>
-                        <p>contactanos</p>
+                        <h3>Facebook</h3>
+                        <p>Síguenos</p>
                     </div>
                 </a>
             </div>
