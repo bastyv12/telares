@@ -3,645 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Telares artesanales de Paulina Chiscao - Arte tradicional en telares">
+    <meta name="keywords" content="telares, artesanía, textiles, arte tradicional">
+    <meta name="author" content="Paulina Chiscao">
     <title>Telares - Paulina Chiscao</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        /* ========== HEADER ========== */
-        header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        header h1 {
-            color: white;
-            font-size: clamp(1.2rem, 4vw, 2.5rem);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            flex: 1;
-        }
-
-        .admin-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: clamp(0.8rem, 2vw, 1rem);
-            white-space: nowrap;
-            position: absolute;
-            right: 20px;
-        }
-
-        .admin-btn:hover {
-            background: white;
-            color: #667eea;
-            transform: scale(1.05);
-        }
-
-        /* ========== NAVEGACIÓN ========== */
-        nav {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: white;
-            color: #667eea;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 0;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: block;
-            white-space: nowrap;
-        }
-
-        nav ul li a:hover,
-        nav ul li a.active {
-            background: white;
-            color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ========== CONTENIDO PRINCIPAL ========== */
-        main {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        section {
-            display: none;
-            background: white;
-            padding: clamp(20px, 4vw, 40px);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.5s ease;
-        }
-
-        section.activo {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h2 {
-            color: #667eea;
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
-            margin-bottom: 30px;
-            border-bottom: 4px solid #667eea;
-            padding-bottom: 15px;
-            text-align: center;
-        }
-
-        /* ========== SECCIÓN INICIO ========== */
-        .welcome-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: clamp(30px, 6vw, 60px);
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            text-align: center;
-        }
-
-        .welcome-card h3 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .welcome-card p {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            line-height: 1.8;
-        }
-
-        /* ========== SECCIÓN BIOGRAFÍA ========== */
-        .bio-content {
-            padding: 20px;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            line-height: 1.8;
-            color: #333;
-            text-align: justify;
-        }
-
-        /* ========== SECCIÓN CONTACTO ========== */
-        .contact-intro {
-            text-align: center;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            margin-bottom: 30px;
-            color: #555;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-            gap: 20px;
-        }
-
-        .contact-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: white;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-        }
-
-        .contact-icon {
-            flex-shrink: 0;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-        }
-
-        .contact-icon svg {
-            width: 30px;
-            height: 30px;
-        }
-
-        .contact-info h3 {
-            color: white;
-            margin: 0 0 5px 0;
-            font-size: clamp(1rem, 2vw, 1.4rem);
-        }
-
-        .contact-info p {
-            margin: 0;
-            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-            font-weight: 600;
-            opacity: 0.95;
-            word-break: break-word;
-        }
-
-        /* ========== SECCIÓN GALERÍA ========== */
-        .categoria {
-            margin: 20px 0;
-        }
-
-        .categoria ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .categoria ul li {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-
-        .categoria ul li:hover,
-        .categoria ul li.active {
-            background: #764ba2;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
-        }
-
-        .img-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .img-gallery img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-        }
-
-        .img-gallery img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        /* ========== MODAL IMAGEN COMPLETA ========== */
-        .ful-img {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .ful-img img {
-            max-width: 95%;
-            max-height: 95%;
-            border-radius: 10px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
-            object-fit: contain;
-        }
-
-        .ful-img span {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: clamp(30px, 8vw, 50px);
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.3s ease;
-            z-index: 1001;
-        }
-
-        .ful-img span:hover {
-            transform: scale(1.2);
-        }
-
-        /* ========== MODAL ADMINISTRACIÓN ========== */
-        .modal-admin {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-content-admin {
-            background: white;
-            padding: clamp(25px, 5vw, 50px);
-            border-radius: 25px;
-            max-width: 650px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: clamp(30px, 6vw, 45px);
-            color: #667eea;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .close-modal:hover {
-            transform: scale(1.2);
-        }
-
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .login-form h2 {
-            border: none;
-            margin-bottom: 10px;
-        }
-
-        .login-form input {
-            padding: 15px;
-            border: 3px solid #667eea;
-            border-radius: 12px;
-            font-size: clamp(1rem, 2vw, 1.1rem);
-            transition: border-color 0.3s ease;
-        }
-
-        .login-form input:focus {
-            outline: none;
-            border-color: #764ba2;
-        }
-
-        .login-form button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 30px;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .login-form button:hover {
-            transform: scale(1.05);
-        }
-
-        .error-msg {
-            color: #dc3545;
-            padding: 12px;
-            background: #f8d7da;
-            border-radius: 10px;
-            display: none;
-            text-align: center;
-            font-weight: 600;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-
-        .admin-panel {
-            display: none;
-        }
-
-        .admin-panel h2 {
-            border: none;
-            margin-bottom: 20px;
-        }
-
-        .stats-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 20px;
-            margin: 15px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .stats-card h3 {
-            margin: 0 0 5px 0;
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-        }
-
-        .stats-card p {
-            margin: 0;
-            opacity: 0.9;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-
-        .stats-number {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-weight: bold;
-        }
-
-        .visit-list {
-            margin-top: 20px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .visit-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 12px 0;
-            border-left: 5px solid #667eea;
-            transition: transform 0.3s ease;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-
-        .visit-item:hover {
-            transform: translateX(5px);
-        }
-
-        .realtime-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background: #28a745;
-            border-radius: 50%;
-            margin-left: 10px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* ========== BOTONES FLOTANTES ========== */
-        .social-buttons {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 999;
-        }
-
-        .social-btn {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .social-btn:hover {
-            transform: scale(1.15);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
-        }
-
-        .btn-instagram {
-            background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
-        }
-
-        .btn-facebook {
-            background: #1877F2;
-        }
-
-        .social-btn svg {
-            width: 28px;
-            height: 28px;
-        }
-
-        /* ========== FOOTER ========== */
-        footer {
-            text-align: center;
-            padding: 25px 20px;
-            color: white;
-            margin-top: 40px;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 10px;
-                padding: 15px 10px;
-            }
-
-            header h1 {
-                margin-bottom: 10px;
-            }
-
-            .admin-btn {
-                position: static;
-                right: auto;
-            }
-
-            .menu-toggle {
-                display: block;
-                margin: 0 auto;
-            }
-
-            nav ul {
-                display: none;
-                flex-direction: column;
-                gap: 10px;
-                margin-top: 15px;
-            }
-
-            nav ul.active {
-                display: flex;
-            }
-
-            nav ul li {
-                width: 100%;
-            }
-
-            nav ul li a {
-                width: 100%;
-                text-align: center;
-            }
-
-            .social-buttons {
-                bottom: 15px;
-                right: 15px;
-                gap: 10px;
-            }
-
-            .social-btn {
-                width: 50px;
-                height: 50px;
-            }
-
-            .social-btn svg {
-                width: 25px;
-                height: 25px;
-            }
-
-            .img-gallery {
-                grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
-                gap: 15px;
-            }
-
-            .img-gallery img {
-                height: 150px;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .img-gallery {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-
-            .img-gallery img {
-                height: 200px;
-            }
-        }
-    </style>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <header>
@@ -662,7 +30,7 @@
     </nav>
 
     <main>
-        <!-- INICIO -->
+        <!-- SECCIÓN INICIO -->
         <section id="portafolio" class="activo">
             <h2>Bienvenidos</h2>
             <div class="welcome-card">
@@ -671,16 +39,16 @@
             </div>
         </section>
 
-        <!-- BIOGRAFÍA -->
+        <!-- SECCIÓN BIOGRAFÍA -->
         <section id="biografia">
             <h2>Sobre Mí</h2>
             <div class="bio-content">
-                <p></p>
-                <p></p>
+                <p>Artesana dedicada al arte tradicional de los telares, manteniendo vivas las técnicas ancestrales transmitidas de generación en generación.</p>
+                <p>Cada pieza refleja la pasión por el trabajo artesanal y el respeto por nuestras raíces culturales.</p>
             </div>
         </section>
 
-        <!-- CONTACTO -->
+        <!-- SECCIÓN CONTACTO -->
         <section id="contacto">
             <h2>Contacto</h2>
             <p class="contact-intro">¿Tienes alguna consulta o te gustaría conocer más sobre mi trabajo? Contáctame a través de Redes sociales y correo</p>
@@ -694,14 +62,14 @@
                         </svg>
                     </div>
                     <div class="contact-info">
-                        <h3>paulina.chiscao@gmail.com</h3>
-                        <p>contactanos</p>
+                        <h3>Email</h3>
+                        <p>paulina.chiscao@gmail.com</p>
                     </div>
                 </a>
             </div>
         </section>
 
-        <!-- GALERÍA -->
+        <!-- SECCIÓN GALERÍA -->
         <section id="galeria">
             <h2>Galería de Trabajos</h2>
             
@@ -760,7 +128,9 @@
                         <h3>Visitas Totales</h3>
                         <p>Desde el inicio</p>
                     </div>
-                    <div class="stats-number" id="totalVisits">0</div>
+                    <div class="stats-number" id="totalVisits">
+                        <div class="loading-spinner"></div>
+                    </div>
                 </div>
 
                 <div class="stats-card">
@@ -768,330 +138,62 @@
                         <h3>Visitas Hoy</h3>
                         <p id="currentDate"></p>
                     </div>
-                    <div class="stats-number" id="todayVisits">0</div>
+                    <div class="stats-number" id="todayVisits">
+                        <div class="loading-spinner"></div>
+                    </div>
                 </div>
 
                 <h3 style="margin-top: 30px; color: #667eea; text-align: center;">Registro de Visitas</h3>
-                <div class="visit-list" id="visitList"></div>
+                <div class="visit-list" id="visitList">
+                    <div class="visit-item" style="text-align: center;">
+                        <div class="loading-spinner" style="margin: 20px auto;"></div>
+                        <p>Cargando estadísticas...</p>
+                    </div>
+                </div>
 
-                <button onclick="logout()" style="margin-top: 25px; background: #dc3545; padding: 15px 35px; color: white; border: none; border-radius: 30px; cursor: pointer; font-size: 1.1rem; font-weight: 600; width: 100%; transition: transform 0.3s ease;">Cerrar Sesión</button>
+                <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Paulina Chiscao - Arte en Telares | Todos los derechos reservados</p>
-    </footer>
-
-    <!-- BOTONES FLOTANTES -->
+    <!-- BOTONES FLOTANTES REDES SOCIALES -->
     <div class="social-buttons">
-        <a href="https://wa.me/56993536082?text=Hola%2C%20me%20interesa%20conocer%20más%20sobre%20tus%20telares" target="_blank" class="social-btn btn-whatsapp" aria-label="WhatsApp" title="Contactar por WhatsApp">
+        <a href="https://wa.me/56993536082?text=Hola%2C%20me%20interesa%20conocer%20más%20sobre%20tus%20telares" 
+           target="_blank" 
+           class="social-btn btn-whatsapp" 
+           aria-label="WhatsApp" 
+           title="Contactar por WhatsApp">
             <svg viewBox="0 0 24 24" fill="white">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
         </a>
 
-        <a href="https://www.instagram.com/paulina_chiscao_arte_en_telar" target="_blank" class="social-btn btn-instagram" aria-label="Instagram" title="Síguenos en Instagram">
+        <a href="https://www.instagram.com/paulina_chiscao_arte_en_telar" 
+           target="_blank" 
+           class="social-btn btn-instagram" 
+           aria-label="Instagram" 
+           title="Síguenos en Instagram">
             <svg viewBox="0 0 24 24" fill="white">
                 <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5A3.5 3.5 0 1 0 12 15a3.5 3.5 0 0 0 0-7Zm4.75-.88a.88.88 0 1 1 0 1.76.88.88 0 0 1 0-1.76Z"/>
             </svg>
         </a>
 
-        <a href="https://www.facebook.com/paulina.chiscao.arte.en.telar" target="_blank" class="social-btn btn-facebook" aria-label="Facebook" title="Síguenos en Facebook">
+        <a href="https://www.facebook.com/paulina.chiscao.arte.en.telar" 
+           target="_blank" 
+           class="social-btn btn-facebook" 
+           aria-label="Facebook" 
+           title="Síguenos en Facebook">
             <svg viewBox="0 0 24 24" fill="white">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
             </svg>
         </a>
     </div>
 
-    <script>
-        // ========== CONFIGURACIÓN ==========
-        const ADMIN_PASSWORD = 'Paulina2025';
-        const STORAGE_KEY = 'telares_visits';
-        const STORAGE_PAGE_VISITS = 'telares_page_visits';
-        let isLoggedIn = false;
+    <footer>
+        <p>&copy; 2025 Paulina Chiscao - Arte en Telares | Todos los derechos reservados</p>
+    </footer>
 
-        // ========== MENÚ RESPONSIVE ==========
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            menu.classList.toggle('active');
-        }
-
-        // Cerrar menú al hacer clic en un enlace (móvil)
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    document.getElementById('navMenu').classList.remove('active');
-                }
-            });
-        });
-
-        // ========== SISTEMA DE VISITAS ==========
-        function getVisitsFromStorage() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            return stored ? JSON.parse(stored) : [];
-        }
-
-        function saveVisitsToStorage(visits) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(visits));
-            // Disparar evento personalizado para sincronización en tiempo real
-            window.dispatchEvent(new Event('visitsUpdated'));
-        }
-
-        function getPageVisitsFromStorage() {
-            const stored = localStorage.getItem(STORAGE_PAGE_VISITS);
-            return stored ? JSON.parse(stored) : [];
-        }
-
-        function savePageVisitsToStorage(pageVisits) {
-            localStorage.setItem(STORAGE_PAGE_VISITS, JSON.stringify(pageVisits));
-            // Disparar evento personalizado para sincronización en tiempo real
-            window.dispatchEvent(new Event('visitsUpdated'));
-        }
-
-        function registerVisit() {
-            const sessionVisited = sessionStorage.getItem('visited');
-            
-            if (!sessionVisited) {
-                const visits = getVisitsFromStorage();
-                const visit = {
-                    timestamp: new Date().toISOString(),
-                    date: new Date().toLocaleDateString('es-CL'),
-                    time: new Date().toLocaleTimeString('es-CL')
-                };
-                
-                visits.push(visit);
-                saveVisitsToStorage(visits);
-                sessionStorage.setItem('visited', 'true');
-            }
-        }
-
-        function registerPageVisit(pageName) {
-            const pageVisits = getPageVisitsFromStorage();
-            const visit = {
-                timestamp: new Date().toISOString(),
-                date: new Date().toLocaleDateString('es-CL'),
-                time: new Date().toLocaleTimeString('es-CL'),
-                page: pageName
-            };
-            
-            pageVisits.push(visit);
-            savePageVisitsToStorage(pageVisits);
-        }
-
-        function updateVisitStats() {
-            const visits = getVisitsFromStorage();
-            const today = new Date().toLocaleDateString('es-CL');
-            const todayVisits = visits.filter(v => v.date === today).length;
-            
-            document.getElementById('totalVisits').textContent = visits.length;
-            document.getElementById('todayVisits').textContent = todayVisits;
-            document.getElementById('currentDate').textContent = today;
-            
-            const pageVisits = getPageVisitsFromStorage();
-            const visitList = document.getElementById('visitList');
-            visitList.innerHTML = '';
-            
-            if (visits.length === 0) {
-                visitList.innerHTML = '<div class="visit-item">No hay visitas registradas aún</div>';
-                return;
-            }
-
-            // Estadísticas por página
-            const pageStats = {};
-            pageVisits.forEach(v => {
-                pageStats[v.page] = (pageStats[v.page] || 0) + 1;
-            });
-
-            visitList.innerHTML += '<h4 style="color: #667eea; margin-bottom: 15px;">📊 Visitas por Sección:</h4>';
-            for (const [page, count] of Object.entries(pageStats)) {
-                const item = document.createElement('div');
-                item.className = 'visit-item';
-                item.style.background = 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)';
-                item.innerHTML = `
-                    <strong>${page}</strong>
-                    <div style="font-size: 2rem; font-weight: bold; color: #667eea;">${count}</div>
-                    <small>visitas totales</small>
-                `;
-                visitList.appendChild(item);
-            }
-
-            visitList.innerHTML += '<h4 style="color: #667eea; margin: 25px 0 15px 0;">🕒 Últimas Visitas:</h4>';
-            const recentPageVisits = pageVisits.slice(-20).reverse();
-            recentPageVisits.forEach(visit => {
-                const item = document.createElement('div');
-                item.className = 'visit-item';
-                item.innerHTML = `
-                    <strong>${visit.page}</strong> - ${visit.date} a las ${visit.time}
-                `;
-                visitList.appendChild(item);
-            });
-
-            visitList.innerHTML += '<h4 style="color: #667eea; margin: 25px 0 15px 0;">👥 Visitantes Únicos:</h4>';
-            const recentVisits = visits.slice(-15).reverse();
-            recentVisits.forEach(visit => {
-                const item = document.createElement('div');
-                item.className = 'visit-item';
-                item.style.borderLeft = '5px solid #764ba2';
-                item.innerHTML = `
-                    <strong>${visit.date}</strong> a las ${visit.time}
-                `;
-                visitList.appendChild(item);
-            });
-        }
-
-        // ========== ACTUALIZACIÓN EN TIEMPO REAL ==========
-        // Escuchar cambios en localStorage (sincronización entre pestañas)
-        window.addEventListener('storage', function(e) {
-            if ((e.key === STORAGE_KEY || e.key === STORAGE_PAGE_VISITS) && isLoggedIn) {
-                updateVisitStats();
-            }
-        });
-
-        // Escuchar evento personalizado (misma pestaña)
-        window.addEventListener('visitsUpdated', function() {
-            if (isLoggedIn) {
-                updateVisitStats();
-            }
-        });
-
-        // Actualizar estadísticas cada 5 segundos si está logueado
-        setInterval(() => {
-            if (isLoggedIn) {
-                updateVisitStats();
-            }
-        }, 5000);
-
-        // ========== MODAL ADMINISTRACIÓN ==========
-        function openAdminModal() {
-            document.getElementById('adminModal').style.display = 'flex';
-            document.getElementById('adminPassword').focus();
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').style.display = 'none';
-            document.getElementById('errorMsg').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-        }
-
-        function checkPassword() {
-            const password = document.getElementById('adminPassword').value;
-            
-            if (password === ADMIN_PASSWORD) {
-                isLoggedIn = true;
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                document.getElementById('errorMsg').style.display = 'none';
-                updateVisitStats();
-            } else {
-                document.getElementById('errorMsg').style.display = 'block';
-            }
-        }
-
-        function logout() {
-            isLoggedIn = false;
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('adminPassword').value = '';
-            closeAdminModal();
-        }
-
-        // Enter para login
-        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
-        });
-
-        // ========== NAVEGACIÓN ==========
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('data-target');
-                const pageName = this.textContent;
-                
-                registerPageVisit(pageName);
-                
-                document.querySelectorAll('section').forEach(section => {
-                    section.classList.remove('activo');
-                });
-                document.getElementById(targetId).classList.add('activo');
-                
-                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
-                
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-
-        // ========== FILTROS DE GALERÍA ==========
-        document.querySelectorAll('#category-filter li').forEach(filter => {
-            filter.addEventListener('click', function() {
-                const category = this.getAttribute('data-filter');
-                
-                document.querySelectorAll('#category-filter li').forEach(f => f.classList.remove('active'));
-                this.classList.add('active');
-                
-                document.querySelectorAll('.img-gallery img').forEach(img => {
-                    if (category === 'todos' || img.getAttribute('data-category') === category) {
-                        img.style.display = 'block';
-                    } else {
-                        img.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-        // ========== GALERÍA DE IMÁGENES ==========
-        document.querySelectorAll('.img-gallery img').forEach(img => {
-            img.addEventListener('click', function() {
-                openFulImg(this.src);
-            });
-        });
-
-        function openFulImg(src) {
-            const fulImgBox = document.getElementById('fulImgBox');
-            const fulImg = document.getElementById('fulImg');
-            fulImg.src = src;
-            fulImgBox.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevenir scroll
-        }
-
-        function closeImg() {
-            document.getElementById('fulImgBox').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restaurar scroll
-        }
-
-        // Cerrar con click en el fondo
-        document.getElementById('fulImgBox').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeImg();
-            }
-        });
-
-        // Cerrar con ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeImg();
-                if (!isLoggedIn) {
-                    closeAdminModal();
-                }
-            }
-        });
-
-        // ========== PREVENIR ZOOM EN DOBLE TAP (iOS) ==========
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(e) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        // ========== INICIALIZAR ==========
-        registerVisit();
-        registerPageVisit('Inicio');
-    </script>
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
 </body>
 </html>
