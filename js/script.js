@@ -356,3 +356,8 @@ document.addEventListener('touchend', function(e) {
 }, false);
 
 console.log('✨ Telares Paulina Chiscao - Sistema iniciado correctamente');
+
+function agregarCarrito(nombre, precio) {
+  alert('Has añadido "' + nombre + '" a tu carrito por $' + precio + ' CLP');
+  // Aquí puedes guardar en localStorage o redirigir al checkout
+}

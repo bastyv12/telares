@@ -1346,3 +1346,39 @@ footer {
         font-size: 1em;
     }
 }
+
+
+#tienda {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+}
+.tienda-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+.producto-item {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+}
+.producto-item img {
+  max-width: 100%;
+  height: auto;
+}
+.producto-item .precio {
+  font-size: 1.4rem;
+  color: #667eea;
+  margin: 10px 0;
+}
+.btn-comprar {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+}
+.btn-comprar:hover {
+  background: #5566cc;
+}
