@@ -672,3 +672,121 @@ footer {
         height: 200px;
     }
 }
+
+
+/* SECCIÓN UBICACIÓN */
+.location-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.location-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.location-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+}
+
+.location-icon {
+    background: rgba(255, 255, 255, 0.2);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+}
+
+.location-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.location-card p {
+    margin: 8px 0;
+    font-size: 1.1em;
+    opacity: 0.95;
+}
+
+.map-container {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+    border: none;
+    border-radius: 15px;
+}
+
+.map-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.map-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive para ubicación */
+@media (min-width: 768px) {
+    .location-container {
+        grid-template-columns: 1fr 1.5fr;
+        align-items: start;
+    }
+    
+    .location-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767px) {
+    .location-card {
+        padding: 25px 20px;
+    }
+    
+    .location-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .location-card h3 {
+        font-size: 1.3em;
+    }
+    
+    .map-container iframe {
+        height: 350px;
+    }
+}
