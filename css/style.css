@@ -790,3 +790,564 @@ footer {
         height: 350px;
     }
 }
+
+
+
+/* ============================================
+   ESTILOS PARA SECCIÓN DE PRODUCTOS
+   ============================================ */
+
+#productos {
+    padding: 40px 20px;
+}
+
+.productos-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+    margin-bottom: 50px;
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+}
+
+.hero-content h3 {
+    color: white;
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.producto-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+}
+
+.producto-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+    border-color: #667eea;
+}
+
+.producto-icon {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.producto-card h3 {
+    color: #667eea;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.producto-card p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 1.05em;
+}
+
+/* Call to Action */
+.productos-cta {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+    margin-top: 50px;
+    box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+}
+
+.productos-cta h3 {
+    color: white;
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.productos-cta p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.cta-button {
+    display: inline-block;
+    background: white;
+    color: #f5576c;
+    padding: 18px 45px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    background: #fff;
+}
+
+/* ============================================
+   ESTILOS PARA SECCIÓN DE UBICACIÓN
+   ============================================ */
+
+#ubicacion {
+    padding: 40px 20px;
+}
+
+.ubicacion-container {
+    margin-bottom: 40px;
+}
+
+.direccion-completa {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    padding: 45px 35px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.direccion-completa::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.direccion-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.direccion-completa h3 {
+    color: white;
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.direccion-detalles {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 25px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.direccion-detalles p {
+    color: white;
+    margin: 10px 0;
+    font-size: 1.15em;
+    line-height: 1.6;
+}
+
+.direccion-principal {
+    font-size: 1.4em !important;
+    font-weight: 700;
+    margin-bottom: 15px !important;
+}
+
+.direccion-calle {
+    font-size: 1.3em !important;
+    font-weight: 500;
+}
+
+.direccion-ciudad {
+    font-size: 1.2em !important;
+    margin-top: 15px !important;
+}
+
+.direccion-postal {
+    font-size: 1.1em !important;
+    opacity: 0.9;
+}
+
+.direccion-button {
+    display: inline-block;
+    background: white;
+    color: #667eea;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.direccion-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    background: #f8f9ff;
+}
+
+.map-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   ESTILOS PARA SECCIÓN DE PRODUCTOS
+   ============================================ */
+
+#productos {
+    padding: 40px 20px;
+}
+
+.productos-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+    margin-bottom: 50px;
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+}
+
+.hero-content h3 {
+    color: white;
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.producto-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid transparent;
+}
+
+.producto-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+    border-color: #667eea;
+}
+
+.producto-icon {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.producto-card h3 {
+    color: #667eea;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.producto-card p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 1.05em;
+}
+
+/* Call to Action */
+.productos-cta {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+    margin-top: 50px;
+    box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+}
+
+.productos-cta h3 {
+    color: white;
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.productos-cta p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.cta-button {
+    display: inline-block;
+    background: white;
+    color: #f5576c;
+    padding: 18px 45px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    background: #fff;
+}
+
+/* ============================================
+   ESTILOS PARA SECCIÓN DE UBICACIÓN
+   ============================================ */
+
+#ubicacion {
+    padding: 40px 20px;
+}
+
+.ubicacion-container {
+    margin-bottom: 40px;
+}
+
+.direccion-completa {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    padding: 45px 35px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.direccion-completa::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.direccion-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.direccion-completa h3 {
+    color: white;
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.direccion-detalles {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 25px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.direccion-detalles p {
+    color: white;
+    margin: 10px 0;
+    font-size: 1.15em;
+    line-height: 1.6;
+}
+
+.direccion-principal {
+    font-size: 1.4em !important;
+    font-weight: 700;
+    margin-bottom: 15px !important;
+}
+
+.direccion-calle {
+    font-size: 1.3em !important;
+    font-weight: 500;
+}
+
+.direccion-ciudad {
+    font-size: 1.2em !important;
+    margin-top: 15px !important;
+}
+
+.direccion-postal {
+    font-size: 1.1em !important;
+    opacity: 0.9;
+}
+
+.direccion-button {
+    display: inline-block;
+    background: white;
+    color: #667eea;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.direccion-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    background: #f8f9ff;
+}
+
+.map-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .productos-hero {
+        padding: 35px 20px;
+    }
+    
+    .hero-content h3 {
+        font-size: 1.6em;
+    }
+    
+    .hero-content p {
+        font-size: 1em;
+    }
+    
+    .productos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .producto-icon {
+        font-size: 2.8em;
+    }
+    
+    .producto-card h3 {
+        font-size: 1.3em;
+    }
+    
+    .productos-cta {
+        padding: 35px 20px;
+    }
+    
+    .productos-cta h3 {
+        font-size: 1.5em;
+    }
+    
+    .direccion-completa {
+        padding: 30px 20px;
+    }
+    
+    .direccion-completa h3 {
+        font-size: 1.6em;
+    }
+    
+    .direccion-icon {
+        font-size: 3em;
+    }
+    
+    .direccion-detalles p {
+        font-size: 1em;
+    }
+    
+    .direccion-principal {
+        font-size: 1.2em !important;
+    }
+    
+    .direccion-calle {
+        font-size: 1.1em !important;
+    }
+    
+    .direccion-ciudad {
+        font-size: 1em !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-button,
+    .direccion-button {
+        padding: 15px 30px;
+        font-size: 1em;
+    }
+}
