@@ -1271,11 +1271,6 @@ footer {
     background: #f8f9ff;
 }
 
-.map-container {
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-}
 
 /* ============================================
    RESPONSIVE DESIGN
