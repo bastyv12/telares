@@ -8,11 +8,17 @@
     <meta name="author" content="Paulina Chiscao">
     <title>Telares - Paulina Chiscao</title>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <!-- http://localhost:8000 -->
+    
 </head>
 <body>
     <header>
         <h1>✨ PAULINA CHISCAO ARTE EN TELAR ✨</h1>
-        <button class="admin-btn" onclick="openAdminModal()">Admin</button>
+        <button class="admin-btn-icon" onclick="openAdminModal()" title="Panel de Administración">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                <path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z"/>
+            </svg>
+        </button>
     </header>
     
     <nav>
@@ -22,10 +28,9 @@
                 <li><a href="#" data-target="portafolio" class="active">Inicio</a></li>
                 <li><a href="#" data-target="tienda">Tienda</a></li>
                 <li><a href="#" data-target="productos">Productos</a></li>
-                <li><a href="#" data-target="biografia">Sobre Mí</a></li>
+                <li><a href="#" data-target="catalogo">Catálogo</a></li>
                 <li><a href="#" data-target="contacto">Contacto</a></li>
                 <li><a href="#" data-target="ubicacion">Ubicación</a></li>
-                <li><a href="#" data-target="catalogo">Catálogo</a></li>
                 <li><a href="#" data-target="galeria">Galería</a></li>
             </ul>
         </div>
@@ -34,10 +39,34 @@
     <main>
         <!-- SECCIÓN INICIO -->
         <section id="portafolio" class="activo">
-            <h2>Bienvenidos</h2>
-            <div class="welcome-card">
-                <h3>Arte Tradicional en Telares</h3>
-                <p>Descubre la belleza y tradición del arte textil. Cada pieza es única y está elaborada con dedicación y pasión por el oficio ancestral de los telares.</p>
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content-main">
+                    <h2 class="hero-title">Bienvenidos</h2>
+                    <h3 class="hero-subtitle">Arte Tradicional en Telares</h3>
+                    <p class="hero-text">Descubre la belleza y tradición del arte textil. Cada pieza es única y está elaborada con dedicación y pasión por el oficio ancestral de los telares.</p>
+                    <div class="hero-buttons">
+                        <button class="hero-btn primary" onclick="navigateTo('catalogo')"><span>📖</span> Ver Catálogo</button>
+                        <button class="hero-btn secondary" onclick="navigateTo('tienda')"><span>🛒</span> Explorar Tienda</button>
+                    </div>
+                </div>
+                <div class="hero-features">
+                    <div class="feature-item fade-in">
+                        <div class="feature-icon">🧵</div>
+                        <h4>100% Artesanal</h4>
+                        <p>Hecho a mano con técnicas tradicionales</p>
+                    </div>
+                    <div class="feature-item fade-in">
+                        <div class="feature-icon">✨</div>
+                        <h4>Piezas Únicas</h4>
+                        <p>Cada trabajo es una obra de arte exclusiva</p>
+                    </div>
+                    <div class="feature-item fade-in">
+                        <div class="feature-icon">🌿</div>
+                        <h4>Materiales Naturales</h4>
+                        <p>Fibras de calidad y colores naturales</p>
+                    </div>
+                </div>
             </div>
         </section>
          <!-- SECCIÓN TIENDA -->
@@ -195,15 +224,6 @@
             </div>
         </section>
 
-        <!-- SECCIÓN BIOGRAFÍA -->
-        <section id="biografia">
-            <h2>Sobre Mí</h2>
-            <div class="bio-content">
-                <p>Artesana dedicada al arte tradicional de los telares, manteniendo vivas las técnicas ancestrales transmitidas de generación en generación.</p>
-                <p>Cada pieza refleja la pasión por el trabajo artesanal y el respeto por nuestras raíces culturales.</p>
-            </div>
-        </section>
-
         <!-- SECCIÓN CONTACTO -->
         <section id="contacto">
             <h2>Contacto</h2>
@@ -253,15 +273,9 @@
             <h2>📄 Catálogo de Productos</h2>
             <p style="text-align: center; margin-bottom: 20px;">Explora nuestro catálogo completo de productos artesanales</p>
             
-            <div class="pdf-controls">
-                <button onclick="previousPage()" class="pdf-btn" id="prevBtn">◀ Anterior</button>
-                <span class="pdf-page-info">
-                    Página <span id="pageNum">1</span> de <span id="pageCount">0</span>
-                </span>
-                <button onclick="nextPage()" class="pdf-btn" id="nextBtn">Siguiente ▶</button>
-                <button onclick="zoomIn()" class="pdf-btn">🔍+</button>
+            <div class="pdf-controls-top">
                 <button onclick="zoomOut()" class="pdf-btn">🔍-</button>
-                <a href="./docs/catalogo.pdf" download class="pdf-btn pdf-download">📥 Descargar</a>
+                <button onclick="zoomIn()" class="pdf-btn">🔍+</button>
             </div>
 
             <div class="pdf-container">
@@ -272,7 +286,30 @@
                 </div>
                 <div class="pdf-error" id="pdfError" style="display: none;">
                     <p>⚠️ No se pudo cargar el catálogo</p>
-                    <a href="./docs/catalogo.pdf" download class="pdf-btn">📥 Descargar PDF</a>
+                </div>
+            </div>
+
+            <div class="pdf-controls-bottom">
+                <div class="pdf-nav-left">
+                    <button onclick="previousPage()" class="pdf-btn" id="prevBtn">◀ Anterior</button>
+                </div>
+                
+                <div class="pdf-page-navigation">
+                    <div class="page-info-row">
+                        <span class="pdf-page-info">
+                            Página <span id="pageNum">1</span> de <span id="pageCount">0</span>
+                        </span>
+                        <div class="page-input-container">
+                            <label>Ir a:</label>
+                            <input type="number" id="pageInput" min="1" class="page-input">
+                            <button onclick="goToPage()" class="pdf-btn-small">►</button>
+                        </div>
+                    </div>
+                    <div id="pageNumbers" class="page-numbers"></div>
+                </div>
+                
+                <div class="pdf-nav-right">
+                    <button onclick="nextPage()" class="pdf-btn" id="nextBtn">Siguiente ▶</button>
                 </div>
             </div>
         </section>
@@ -397,8 +434,50 @@
         </a>
     </div>
 
+    <!-- Botón Volver Arriba -->
+    <button id="backToTop" class="back-to-top" onclick="scrollToTop()" title="Volver arriba">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+    </button>
+
     <footer>
-        <p>&copy; 2025 Paulina Chiscao - Arte en Telares | Todos los derechos reservados</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Paulina Chiscao</h3>
+                <p>Arte tradicional en telares desde el corazón de Lago Ranco, Chile.</p>
+                <div class="footer-social">
+                    <a href="https://wa.me/56993536082" target="_blank" title="WhatsApp">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/paulina_chiscao_arte_en_telar" target="_blank" title="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5A3.5 3.5 0 1 0 12 15a3.5 3.5 0 0 0 0-7Zm4.75-.88a.88.88 0 1 1 0 1.76.88.88 0 0 1 0-1.76Z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/paulina.chiscao.arte.en.telar" target="_blank" title="Facebook">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 paulina.chiscao@gmail.com</p>
+                <p>📱 +56 9 9353 6082</p>
+                <p>📍 Villa Altos Del Ranco</p>
+                <p>Ojos Del Huishue 383, Lago Ranco</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horario</h3>
+                <p>Lunes a Viernes: 9:00 - 18:00</p>
+                <p>Sábados: 10:00 - 14:00</p>
+                <p>Domingos: Cerrado</p>
+                <br>
+                <p><strong>Envíos a todo Chile</strong></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Paulina Chiscao - Arte en Telares | Todos los derechos reservados</p>
+            <p class="footer-made">Hecho con ❤️ en Lago Ranco, Chile</p>
+        </div>
     </footer>
 
     <!-- PDF.js Library -->

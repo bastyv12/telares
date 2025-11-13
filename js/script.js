@@ -357,6 +357,84 @@ document.addEventListener('touchend', function(e) {
 
 console.log('✨ Telares Paulina Chiscao - Sistema iniciado correctamente');
 
+// ========== NAVEGACIÓN CON FUNCIONES ==========
+function navigateTo(targetId) {
+    // Cambiar sección activa
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.remove('activo');
+    });
+    document.getElementById(targetId).classList.add('activo');
+    
+    // Cambiar enlace activo
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    document.querySelector(`a[data-target="${targetId}"]`).classList.add('active');
+    
+    // Registrar visita si existe la función
+    if (typeof registerPageVisit === 'function') {
+        const pageNames = {
+            'portafolio': 'Inicio',
+            'tienda': 'Tienda',
+            'productos': 'Productos',
+            'catalogo': 'Catálogo',
+            'contacto': 'Contacto',
+            'ubicacion': 'Ubicación',
+            'galeria': 'Galería'
+        };
+        registerPageVisit(pageNames[targetId] || 'Página');
+    }
+    
+    // Scroll suave al inicio
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Cargar PDF si es catálogo
+    if (targetId === 'catalogo' && !pdfDoc) {
+        setTimeout(() => loadPDF(), 100);
+    }
+}
+
+// ========== BOTÓN VOLVER ARRIBA ==========
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
+});
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// ========== ANIMACIONES AL SCROLL ==========
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Observar elementos con animación
+    document.querySelectorAll('.producto-card, .feature-item, .contact-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease';
+        observer.observe(el);
+    });
+});
+
 // ========== VISOR DE PDF ==========
 let pdfDoc = null;
 let pageNum = 1;
@@ -427,12 +505,22 @@ function loadPDF() {
     pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
         pdfDoc = pdfDoc_;
         console.log('PDF cargado correctamente. Páginas:', pdfDoc.numPages);
-        document.getElementById('pageCount').textContent = pdfDoc.numPages;
+        
+        const pageCountElement = document.getElementById('pageCount');
+        if (pageCountElement) {
+            pageCountElement.textContent = pdfDoc.numPages;
+        }
+        
+        const pageInputElement = document.getElementById('pageInput');
+        if (pageInputElement) {
+            pageInputElement.max = pdfDoc.numPages;
+        }
         
         if (loadingDiv) loadingDiv.style.display = 'none';
         
-        // Renderizar primera página
+        // Renderizar primera página y generar números
         renderPage(pageNum);
+        updatePageNumbers();
     }).catch(function(error) {
         console.error('Error al cargar PDF:', error);
         if (loadingDiv) loadingDiv.style.display = 'none';
@@ -468,7 +556,121 @@ function renderPage(num) {
     });
 
     document.getElementById('pageNum').textContent = num;
+    updatePageNumbers();
+    updatePageInput();
 }
+
+// Actualizar campo de entrada de página
+function updatePageInput() {
+    const pageInput = document.getElementById('pageInput');
+    if (pageInput && pdfDoc) {
+        pageInput.max = pdfDoc.numPages;
+        pageInput.value = pageNum;
+    }
+}
+
+// Ir a página específica desde input
+function goToPage() {
+    const pageInput = document.getElementById('pageInput');
+    if (!pageInput || !pdfDoc) return;
+    
+    const targetPage = parseInt(pageInput.value);
+    
+    if (targetPage >= 1 && targetPage <= pdfDoc.numPages) {
+        pageNum = targetPage;
+        queueRenderPage(pageNum);
+    } else {
+        alert(`Por favor ingrese un número entre 1 y ${pdfDoc.numPages}`);
+        pageInput.value = pageNum;
+    }
+}
+
+// Ir a página específica desde número clickeable
+function goToPageNumber(page) {
+    if (!pdfDoc || page < 1 || page > pdfDoc.numPages) return;
+    pageNum = page;
+    queueRenderPage(pageNum);
+}
+
+// Actualizar números de página clickeables
+function updatePageNumbers() {
+    if (!pdfDoc) return;
+    
+    const pageNumbersDiv = document.getElementById('pageNumbers');
+    if (!pageNumbersDiv) return;
+    
+    pageNumbersDiv.innerHTML = '';
+    
+    const totalPages = pdfDoc.numPages;
+    const currentPage = pageNum;
+    
+    // Mostrar máximo 7 números de página con elipsis
+    let pagesToShow = [];
+    
+    if (totalPages <= 7) {
+        // Mostrar todos los números
+        for (let i = 1; i <= totalPages; i++) {
+            pagesToShow.push(i);
+        }
+    } else {
+        // Siempre mostrar primera página
+        pagesToShow.push(1);
+        
+        if (currentPage > 3) {
+            pagesToShow.push('...');
+        }
+        
+        // Mostrar páginas alrededor de la actual
+        const start = Math.max(2, currentPage - 1);
+        const end = Math.min(totalPages - 1, currentPage + 1);
+        
+        for (let i = start; i <= end; i++) {
+            if (!pagesToShow.includes(i)) {
+                pagesToShow.push(i);
+            }
+        }
+        
+        if (currentPage < totalPages - 2) {
+            pagesToShow.push('...');
+        }
+        
+        // Siempre mostrar última página
+        if (!pagesToShow.includes(totalPages)) {
+            pagesToShow.push(totalPages);
+        }
+    }
+    
+    // Crear elementos
+    pagesToShow.forEach(page => {
+        const pageElement = document.createElement('div');
+        
+        if (page === '...') {
+            pageElement.className = 'page-number ellipsis';
+            pageElement.textContent = '...';
+        } else {
+            pageElement.className = 'page-number';
+            if (page === currentPage) {
+                pageElement.classList.add('active');
+            }
+            pageElement.textContent = page;
+            pageElement.onclick = () => goToPageNumber(page);
+        }
+        
+        pageNumbersDiv.appendChild(pageElement);
+    });
+}
+
+// Enter para ir a página
+document.addEventListener('DOMContentLoaded', function() {
+    const pageInput = document.getElementById('pageInput');
+    if (pageInput) {
+        pageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                goToPage();
+            }
+        });
+    }
+});
 
 // Encolar renderizado de página
 function queueRenderPage(num) {
