@@ -879,11 +879,54 @@ function cerrarModalProductoClick(e) {
   }
 }
 
-// Función para “añadir al carrito” desde modal (puede ajustarse a tu lógica)
+// Función para "añadir al carrito" desde modal (puede ajustarse a tu lógica)
 function agregarCarritoModal() {
   const titulo = document.getElementById('modalTitulo').textContent;
   const precioTexto = document.getElementById('modalPrecio').textContent;
   alert('Añadido al carrito: ' + titulo + ' por ' + precioTexto);
   // Aquí puedes añadir lógica: guardar en localStorage, enviar a backend, etc.
   cerrarModalProducto();
+}
+
+// ========== FUNCIONES PDF SIN SERVIDOR ==========
+let currentPdfPage = 1;
+const totalPdfPages = 7;
+
+function pdfNextPage() {
+    if (currentPdfPage < totalPdfPages) {
+        currentPdfPage++;
+        updatePdfPage();
+    }
+}
+
+function pdfPreviousPage() {
+    if (currentPdfPage > 1) {
+        currentPdfPage--;
+        updatePdfPage();
+    }
+}
+
+function pdfGoToPage() {
+    const input = document.getElementById('pageInput');
+    const page = parseInt(input.value);
+    if (page >= 1 && page <= totalPdfPages) {
+        currentPdfPage = page;
+        updatePdfPage();
+    }
+}
+
+function updatePdfPage() {
+    const viewer = document.getElementById('pdfViewer');
+    const currentPageSpan = document.getElementById('currentPage');
+    const pageInput = document.getElementById('pageInput');
+    
+    if (viewer) {
+        viewer.src = `./docs/catalogo.pdf#page=${currentPdfPage}`;
+    }
+    if (currentPageSpan) {
+        currentPageSpan.textContent = currentPdfPage;
+    }
+    if (pageInput) {
+        pageInput.value = currentPdfPage;
+    }
 }
