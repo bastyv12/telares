@@ -20,10 +20,12 @@
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul id="navMenu">
                 <li><a href="#" data-target="portafolio" class="active">Inicio</a></li>
+                <li><a href="#" data-target="tienda">Tienda</a></li>
                 <li><a href="#" data-target="productos">Productos</a></li>
                 <li><a href="#" data-target="biografia">Sobre Mí</a></li>
                 <li><a href="#" data-target="contacto">Contacto</a></li>
                 <li><a href="#" data-target="ubicacion">Ubicación</a></li>
+                <li><a href="#" data-target="catalogo">Catálogo</a></li>
                 <li><a href="#" data-target="galeria">Galería</a></li>
             </ul>
         </div>
@@ -39,29 +41,111 @@
             </div>
         </section>
          <!-- SECCIÓN TIENDA -->
-        <section id="tienda">
-        <h2>Tienda</h2>
-        <p>Explora nuestras piezas disponibles. Cada tela artesanal es única y elaborada con cuidado.</p>
-        <div class="tienda-grid">
-            <!-- Producto 1 -->
-            <div class="producto-item">
-            <img src="./img/.jpg" alt="Tela artesanal diseño 1">
-            <h3>Pieza Artesanal – Diseño 1</h3>
-            <p class="precio">$ CLP</p>
-            <p>Tejido en telares tradicionales con colores vibrantes y diseño exclusivo.</p>
-            <button class="btn-comprar" onclick="agregarCarrito('Pieza Artesanal – Diseño 1', 45000)">Añadir al carrito</button>
+          <section id="tienda">
+            <h2>Tienda</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Explora nuestras piezas únicas. Haz clic en cualquier producto para ver más detalles</p>
+            <div class="tienda-grid">
+                <!-- Producto 1 -->
+                <div class="producto-item" onclick="abrirModalProducto(0)">
+                    <img src="./img/hilados.jpeg" alt="Hilado artesanal">
+                    <div class="producto-info">
+                        <h3>Hilado</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="producto-item" onclick="abrirModalProducto(1)">
+                    <img src="./img/hilados2.jpeg" alt="Hilado especial">
+                    <div class="producto-info">
+                        <h3>Hilado</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="producto-item" onclick="abrirModalProducto(2)">
+                    <img src="./img/hilados3.jpeg" alt="Hilado premium">
+                    <div class="producto-info">
+                        <h3>Hilado</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="producto-item" onclick="abrirModalProducto(3)">
+                    <img src="./img/hilados4.jpeg" alt="Hilado tradicional">
+                    <div class="producto-info">
+                        <h3>Hilado</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 5 -->
+                <div class="producto-item" onclick="abrirModalProducto(4)">
+                    <img src="./img/hilados5.jpeg" alt="Hilado natural">
+                    <div class="producto-info">
+                        <h3>Hilado</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 6 -->
+                <div class="producto-item" onclick="abrirModalProducto(5)">
+                    <img src="./img/poncho.jpeg" alt="Poncho artesanal">
+                    <div class="producto-info">
+                        <h3>Poncho</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 7 -->
+                <div class="producto-item" onclick="abrirModalProducto(6)">
+                    <img src="./img/poncho2.jpeg" alt="Poncho tradicional">
+                    <div class="producto-info">
+                        <h3>Poncho</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 8 -->
+                <div class="producto-item" onclick="abrirModalProducto(7)">
+                    <img src="./img/chal.jpeg" alt="Chal tejido">
+                    <div class="producto-info">
+                        <h3>Chal</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
+
+                <!-- Producto 9 -->
+                <div class="producto-item" onclick="abrirModalProducto(8)">
+                    <img src="./img/chal2.jpeg" alt="Chal elegante">
+                    <div class="producto-info">
+                        <h3>Chal</h3>
+                        <p class="precio">$ CLP</p>
+                    </div>
+                </div>
             </div>
-            <!-- Producto 2 -->
-            <div class="producto-item">
-            <img src="./img/.jpg" alt="Tela artesanal diseño 2">
-            <h3>Pieza Artesanal – Diseño 2</h3>
-            <p class="precio">$55.000 CLP</p>
-            <p>Edición limitada: tejido con técnica ancestral y acabado contemporáneo.</p>
-            <button class="btn-comprar" onclick="agregarCarrito('Pieza Artesanal – Diseño 2', 55000)">Añadir al carrito</button>
-            </div>
-            <!-- Más productos… -->
-        </div>
         </section>
+        <!-- MODAL DE PRODUCTO -->
+        <div class="modal-producto" id="modalProducto" onclick="cerrarModalProductoClick(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+            <img id="modalImagen" src="" alt="">
+            <div class="close-modal-producto" onclick="cerrarModalProducto()">✕</div>
+            </div>
+            <div class="modal-body">
+            <h2 class="modal-title" id="modalTitulo"></h2>
+            <div class="modal-precio" id="modalPrecio"></div>
+            <div class="caracteristicas" id="modalCaracteristicas"></div>
+            <div class="descripcion-section">
+                <h3>Descripción del Producto</h3>
+                <div class="descripcion-text" id="modalDescripcion"></div>
+            </div>
+            <button class="btn-comprar-modal" onclick="agregarCarritoModal()">🛒 Añadir al Carrito</button>
+            </div>
+        </div>
+        </div>
         <!-- SECCIÓN PRODUCTOS Y SERVICIOS -->
         <section id="productos">
             <h2>Productos y Servicios</h2>   
@@ -160,6 +244,35 @@
                        class="direccion-button">
                         Ver en Google Maps →
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CATÁLOGO PDF -->
+        <section id="catalogo">
+            <h2>📄 Catálogo de Productos</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Explora nuestro catálogo completo de productos artesanales</p>
+            
+            <div class="pdf-controls">
+                <button onclick="previousPage()" class="pdf-btn" id="prevBtn">◀ Anterior</button>
+                <span class="pdf-page-info">
+                    Página <span id="pageNum">1</span> de <span id="pageCount">0</span>
+                </span>
+                <button onclick="nextPage()" class="pdf-btn" id="nextBtn">Siguiente ▶</button>
+                <button onclick="zoomIn()" class="pdf-btn">🔍+</button>
+                <button onclick="zoomOut()" class="pdf-btn">🔍-</button>
+                <a href="./docs/catalogo.pdf" download class="pdf-btn pdf-download">📥 Descargar</a>
+            </div>
+
+            <div class="pdf-container">
+                <canvas id="pdfCanvas"></canvas>
+                <div class="pdf-loading" id="pdfLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Cargando catálogo...</p>
+                </div>
+                <div class="pdf-error" id="pdfError" style="display: none;">
+                    <p>⚠️ No se pudo cargar el catálogo</p>
+                    <a href="./docs/catalogo.pdf" download class="pdf-btn">📥 Descargar PDF</a>
                 </div>
             </div>
         </section>
@@ -288,6 +401,8 @@
         <p>&copy; 2025 Paulina Chiscao - Arte en Telares | Todos los derechos reservados</p>
     </footer>
 
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

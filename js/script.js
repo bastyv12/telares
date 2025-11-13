@@ -357,7 +357,331 @@ document.addEventListener('touchend', function(e) {
 
 console.log('✨ Telares Paulina Chiscao - Sistema iniciado correctamente');
 
-function agregarCarrito(nombre, precio) {
-  alert('Has añadido "' + nombre + '" a tu carrito por $' + precio + ' CLP');
-  // Aquí puedes guardar en localStorage o redirigir al checkout
+// ========== VISOR DE PDF ==========
+let pdfDoc = null;
+let pageNum = 1;
+let pageRendering = false;
+let pageNumPending = null;
+let scale = 1.5;
+let canvas = null;
+let ctx = null;
+
+// Inicializar canvas cuando el DOM esté listo
+function initPDFCanvas() {
+    canvas = document.getElementById('pdfCanvas');
+    if (canvas) {
+        ctx = canvas.getContext('2d');
+        console.log('Canvas inicializado correctamente');
+    } else {
+        console.error('No se encontró el elemento canvas');
+    }
+}
+
+// Configurar PDF.js cuando se cargue
+window.addEventListener('load', function() {
+    if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        console.log('PDF.js configurado correctamente');
+    } else {
+        console.error('PDF.js no se cargó correctamente');
+    }
+    initPDFCanvas();
+});
+
+// Cargar PDF cuando se abre la sección
+document.addEventListener('DOMContentLoaded', function() {
+    const catalogoLink = document.querySelector('a[data-target="catalogo"]');
+    if (catalogoLink) {
+        catalogoLink.addEventListener('click', function() {
+            setTimeout(function() {
+                if (!pdfDoc) {
+                    loadPDF();
+                }
+            }, 100);
+        });
+    }
+});
+
+// Cargar el documento PDF
+function loadPDF() {
+    const loadingDiv = document.getElementById('pdfLoading');
+    const errorDiv = document.getElementById('pdfError');
+    const canvasElement = document.getElementById('pdfCanvas');
+    
+    console.log('Intentando cargar PDF...');
+    console.log('Canvas existe:', !!canvasElement);
+    console.log('PDF.js cargado:', typeof pdfjsLib !== 'undefined');
+    
+    if (loadingDiv) loadingDiv.style.display = 'block';
+    if (errorDiv) errorDiv.style.display = 'none';
+
+    const url = './docs/catalogo.pdf';
+    
+    if (typeof pdfjsLib === 'undefined') {
+        console.error('PDF.js no está cargado');
+        if (loadingDiv) loadingDiv.style.display = 'none';
+        if (errorDiv) errorDiv.style.display = 'block';
+        return;
+    }
+    
+    pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        console.log('PDF cargado correctamente. Páginas:', pdfDoc.numPages);
+        document.getElementById('pageCount').textContent = pdfDoc.numPages;
+        
+        if (loadingDiv) loadingDiv.style.display = 'none';
+        
+        // Renderizar primera página
+        renderPage(pageNum);
+    }).catch(function(error) {
+        console.error('Error al cargar PDF:', error);
+        if (loadingDiv) loadingDiv.style.display = 'none';
+        if (errorDiv) errorDiv.style.display = 'block';
+    });
+}
+
+// Renderizar una página específica
+function renderPage(num) {
+    if (!pdfDoc || !canvas || !ctx) return;
+    
+    pageRendering = true;
+    
+    pdfDoc.getPage(num).then(function(page) {
+        const viewport = page.getViewport({ scale: scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        
+        const renderTask = page.render(renderContext);
+        
+        renderTask.promise.then(function() {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+                renderPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+    });
+
+    document.getElementById('pageNum').textContent = num;
+}
+
+// Encolar renderizado de página
+function queueRenderPage(num) {
+    if (pageRendering) {
+        pageNumPending = num;
+    } else {
+        renderPage(num);
+    }
+}
+
+// Página anterior
+function previousPage() {
+    if (pageNum <= 1) {
+        return;
+    }
+    pageNum--;
+    queueRenderPage(pageNum);
+}
+
+// Página siguiente
+function nextPage() {
+    if (!pdfDoc || pageNum >= pdfDoc.numPages) {
+        return;
+    }
+    pageNum++;
+    queueRenderPage(pageNum);
+}
+
+// Zoom in
+function zoomIn() {
+    scale += 0.25;
+    if (scale > 3) scale = 3;
+    queueRenderPage(pageNum);
+}
+
+// Zoom out
+function zoomOut() {
+    scale -= 0.25;
+    if (scale < 0.5) scale = 0.5;
+    queueRenderPage(pageNum);
+}
+
+// Navegación con teclado
+document.addEventListener('keydown', function(e) {
+    const catalogoSection = document.getElementById('catalogo');
+    if (catalogoSection && catalogoSection.classList.contains('activo')) {
+        if (e.key === 'ArrowLeft') {
+            previousPage();
+        } else if (e.key === 'ArrowRight') {
+            nextPage();
+        } else if (e.key === '+' || e.key === '=') {
+            zoomIn();
+        } else if (e.key === '-') {
+            zoomOut();
+        }
+    }
+});
+
+function agregarCarritoModal() {
+  const titulo = document.getElementById('modalTitulo').textContent;
+  const precioTexto = document.getElementById('modalPrecio').textContent;
+  
+  // Aquí podrías generar dinámicamente un link con el producto, precio, etc.
+  // Para ahora, redirigimos al enlace de pago:
+  const LINK_PAGO = "https://www.mercadopago.cl/checkout/link-xxxxxx";
+  
+  // Opcionalmente añadir parámetros (utm, producto) …
+  window.location.href = LINK_PAGO;
+}
+
+// Datos de los productos
+const productos = [
+  {
+    titulo: "Hilado Artesanal",
+    precio: 1,
+    img: "./img/hilados.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Peso", valor: "" },
+      { nombre: "Técnica", valor: "" }
+    ]
+  },
+  {
+    titulo: "Hilado Especial",
+    precio: 1,
+    img: "./img/hilados2.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Peso", valor: "" },
+      { nombre: "Color", valor: "" }
+    ]
+  },
+  {
+    titulo: "Hilado Premium",
+    precio: 1,
+    img: "./img/hilados3.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Peso", valor: "}" },
+      { nombre: "Certificación", valor: "" }
+    ]
+  },
+  {
+    titulo: "Hilado Tradicional",
+    precio: 1,
+    img: "./img/hilados4.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Peso", valor: "" },
+      { nombre: "Origen", valor: "" }
+    ]
+  },
+  {
+    titulo: "Hilado Natural",
+    precio: 1,
+    img: "./img/hilados5.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Peso", valor: "" },
+      { nombre: "Certificación", valor: "" }
+    ]
+  },
+  {
+    titulo: "Poncho Artesanal",
+    precio: 1,
+    img: "./img/poncho.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Tamaño", valor: "" },
+      { nombre: "Diseño", valor: "" }
+    ]
+  },
+  {
+    titulo: "Poncho Tradicional",
+    precio: 1,
+    img: "./img/poncho2.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Tamaño", valor: "" },
+      { nombre: "Origen", valor: "" }
+    ]
+  },
+  {
+    titulo: "Chal Tejido",
+    precio: 1,
+    img: "./img/chal.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Tamaño", valor: "" },
+      { nombre: "Color", valor: "" }
+    ]
+  },
+  {
+    titulo: "Chal Elegante",
+    precio: 1,
+    img: "./img/chal2.jpeg",
+    descripcion: "",
+    caracteristicas: [
+      { nombre: "Material", valor: "" },
+      { nombre: "Tamaño", valor: "" },
+      { nombre: "Acabado", valor: "" }
+    ]
+  }
+];
+
+// Función para abrir modal y mostrar producto
+function abrirModalProducto(index) {
+  const prod = productos[index];
+  if (!prod) return;
+  document.getElementById('modalImagen').src = prod.img;
+  document.getElementById('modalTitulo').textContent = prod.titulo;
+  document.getElementById('modalPrecio').textContent = "$" + prod.precio.toLocaleString("es-CL") + " CLP";
+  document.getElementById('modalDescripcion').textContent = prod.descripcion;
+
+  const carr = document.getElementById('modalCaracteristicas');
+  carr.innerHTML = ""; // limpiar
+  prod.caracteristicas.forEach(c => {
+    const div = document.createElement('div');
+    div.className = "caracteristica-item";
+    div.innerHTML = `<strong>${c.nombre}</strong><span>${c.valor}</span>`;
+    carr.appendChild(div);
+  });
+
+  document.getElementById('modalProducto').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// Cerrar modal de producto
+function cerrarModalProducto() {
+  document.getElementById('modalProducto').classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+// Cerrar modal si se hace click fuera del contenido
+function cerrarModalProductoClick(e) {
+  if (e.target.id === 'modalProducto') {
+    cerrarModalProducto();
+  }
+}
+
+// Función para “añadir al carrito” desde modal (puede ajustarse a tu lógica)
+function agregarCarritoModal() {
+  const titulo = document.getElementById('modalTitulo').textContent;
+  const precioTexto = document.getElementById('modalPrecio').textContent;
+  alert('Añadido al carrito: ' + titulo + ' por ' + precioTexto);
+  // Aquí puedes añadir lógica: guardar en localStorage, enviar a backend, etc.
+  cerrarModalProducto();
 }
