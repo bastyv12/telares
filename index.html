@@ -270,33 +270,21 @@
         <!-- SECCIÓN CATÁLOGO PDF -->
         <section id="catalogo">
             <h2>📄 Catálogo de Productos</h2>
-            <p style="text-align: center; margin-bottom: 20px;">Explora nuestro catálogo completo de productos artesanales</p>
+            <p style="text-align: center; margin-bottom: 20px; color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Explora nuestro catálogo completo de productos artesanales</p>
             
             <div class="pdf-container">
-                <iframe id="pdfViewer" src="./docs/catalogo.pdf#page=1" type="application/pdf" width="100%" height="800px" style="border: 3px solid rgba(255, 255, 255, 0.5); border-radius: 15px;"></iframe>
+                <object id="pdfViewer" data="./docs/catalogo.pdf" type="application/pdf" width="100%" height="800px" style="border: 3px solid rgba(255, 255, 255, 0.5); border-radius: 15px;">
+                    <p style="color: white; text-align: center; padding: 20px;">
+                        Tu navegador no puede mostrar PDFs. 
+                        <a href="./docs/catalogo.pdf" download style="color: white; text-decoration: underline;">Descarga el catálogo aquí</a>
+                    </p>
+                </object>
             </div>
 
             <div class="pdf-controls-bottom">
-                <div class="pdf-nav-left">
-                    <button onclick="pdfPreviousPage()" class="pdf-btn" id="prevBtn">◀ Anterior</button>
-                </div>
-                
-                <div class="pdf-page-navigation">
-                    <div class="page-info-row">
-                        <span class="pdf-page-info">
-                            Página <span id="currentPage">1</span> de <span id="totalPages">7</span>
-                        </span>
-                        <div class="page-input-container">
-                            <label>Ir a:</label>
-                            <input type="number" id="pageInput" min="1" max="7" value="1" class="page-input">
-                            <button onclick="pdfGoToPage()" class="pdf-btn-small">►</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="pdf-nav-right">
-                    <button onclick="pdfNextPage()" class="pdf-btn" id="nextBtn">Siguiente ▶</button>
-                </div>
+                <p style="color: white; text-align: center; font-size: 0.95rem; margin-top: 15px; opacity: 0.9;">
+                    💡 Usa los controles del visor PDF para navegar entre las 7 páginas del catálogo
+                </p>
             </div>
 
 
