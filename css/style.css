@@ -81,7 +81,7 @@ nav {
 
 .menu-toggle {
     display: none;
-    background: white;
+    background: transparent;
     color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     border: none;
     padding: 10px 15px;
@@ -115,7 +115,7 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a.active {
-    background: white;
+    background: transparent;
     color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -133,11 +133,8 @@ main {
 
 section {
     display: none;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
+    background: transparent;
     padding: clamp(20px, 4vw, 40px);
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease;
 }
 
@@ -160,17 +157,15 @@ h2 {
     color: white;
     font-size: clamp(1.5rem, 4vw, 2.2rem);
     margin-bottom: 30px;
-    border-bottom: 4px solid rgba(255, 255, 255, 0.5);
-    padding-bottom: 15px;
     text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* ========== SECCIÓN INICIO - HERO ========== */
 .hero-section {
     position: relative;
     min-height: 600px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     overflow: hidden;
     display: flex;
@@ -250,7 +245,7 @@ h2 {
 }
 
 .hero-btn.primary {
-    background: white;
+    background: transparent;
     color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -266,7 +261,7 @@ h2 {
 }
 
 .hero-btn.secondary:hover {
-    background: white;
+    background: transparent;
     color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     transform: translateY(-5px);
 }
@@ -365,10 +360,10 @@ h2 {
 }
 
 .contact-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    border: 3px solid rgba(255, 255, 255, 0.4);
     display: flex;
     align-items: center;
     gap: 15px;
@@ -378,8 +373,9 @@ h2 {
 }
 
 .contact-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .contact-icon {
@@ -426,7 +422,7 @@ h2 {
 }
 
 .categoria ul li {
-    background: #667eea;
+    background: transparent;
     color: white;
     padding: 10px 20px;
     border-radius: 30px;
@@ -434,13 +430,13 @@ h2 {
     transition: all 0.3s ease;
     font-weight: 600;
     font-size: clamp(0.9rem, 2vw, 1rem);
+    border: 3px solid rgba(255, 255, 255, 0.4);
 }
 
 .categoria ul li:hover,
 .categoria ul li.active {
-    background: #764ba2;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
 }
 
 .img-gallery {
@@ -572,7 +568,7 @@ h2 {
 }
 
 .login-form button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     color: white;
     border: none;
     padding: 15px;
@@ -608,7 +604,7 @@ h2 {
 }
 
 .stats-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     color: white;
     padding: 20px;
     border-radius: 20px;
@@ -801,7 +797,7 @@ footer {
 }
 
 .footer-social a:hover {
-    background: white;
+    background: transparent;
     transform: translateY(-5px);
 }
 
@@ -832,7 +828,7 @@ footer {
     right: 30px;
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -997,18 +993,19 @@ footer {
 }
 
 .location-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent;
     padding: 30px;
     border-radius: 15px;
     color: white;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    transition: transform 0.3s ease;
 }
 
 .location-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .location-icon {
@@ -1037,11 +1034,10 @@ footer {
 
 .map-container {
     position: relative;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: transparent;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.4);
 }
 
 .map-container iframe {
@@ -1055,7 +1051,7 @@ footer {
     display: inline-block;
     margin-top: 15px;
     padding: 12px 30px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     color: white;
     text-decoration: none;
     border-radius: 25px;
@@ -1111,7 +1107,7 @@ footer {
 }
 
 .productos-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     padding: 50px 30px;
     text-align: center;
@@ -1141,15 +1137,7 @@ footer {
     margin: 50px 0;
 }
 
-.producto-card {
-    background: white;
-    border-radius: 20px;
-    padding: 35px 25px;
-    text-align: center;
-    transition: all 0.4s ease;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    border: 2px solid transparent;
-}
+.producto-card { background: transparent; border-radius: 20px; padding: 35px 25px; text-align: center; transition: all 0.4s ease; border: 3px solid rgba(255, 255, 255, 0.4); }
 
 .producto-card:hover {
     transform: translateY(-10px);
@@ -1207,7 +1195,7 @@ footer {
 
 .cta-button {
     display: inline-block;
-    background: white;
+    background: transparent;
     color: #f5576c;
     padding: 18px 45px;
     border-radius: 50px;
@@ -1237,7 +1225,7 @@ footer {
 }
 
 .direccion-completa {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     border-radius: 25px;
     padding: 45px 35px;
     text-align: center;
@@ -1318,7 +1306,7 @@ footer {
 
 .direccion-button {
     display: inline-block;
-    background: white;
+    background: transparent;
     color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     padding: 18px 40px;
     border-radius: 50px;
@@ -1353,7 +1341,7 @@ footer {
 }
 
 .productos-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     padding: 50px 30px;
     text-align: center;
@@ -1383,15 +1371,7 @@ footer {
     margin: 50px 0;
 }
 
-.producto-card {
-    background: white;
-    border-radius: 20px;
-    padding: 35px 25px;
-    text-align: center;
-    transition: all 0.4s ease;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    border: 2px solid transparent;
-}
+.producto-card { background: transparent; border-radius: 20px; padding: 35px 25px; text-align: center; transition: all 0.4s ease; border: 3px solid rgba(255, 255, 255, 0.4); }
 
 .producto-card:hover {
     transform: translateY(-10px);
@@ -1449,7 +1429,7 @@ footer {
 
 .cta-button {
     display: inline-block;
-    background: white;
+    background: transparent;
     color: #f5576c;
     padding: 18px 45px;
     border-radius: 50px;
@@ -1479,7 +1459,7 @@ footer {
 }
 
 .direccion-completa {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     border-radius: 25px;
     padding: 45px 35px;
     text-align: center;
@@ -1560,7 +1540,7 @@ footer {
 
 .direccion-button {
     display: inline-block;
-    background: white;
+    background: transparent;
     color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     padding: 18px 40px;
     border-radius: 50px;
@@ -1659,7 +1639,7 @@ footer {
 
 #tienda {
   padding: 60px 20px;
-  background-color: #f9f9f9;
+  background: transparent;
 }
 .tienda-grid {
   display: grid;
@@ -1667,7 +1647,7 @@ footer {
   gap: 30px;
 }
 .producto-item {
-  background: white;
+  background: transparent;
   border: 1px solid #ddd;
   padding: 20px;
   text-align: center;
@@ -1701,18 +1681,16 @@ footer {
     }
 
 #tienda .producto-item {
-    background: white;
+    background: transparent;
     border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: visible;
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
 }
 
 #tienda .producto-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    transform: translateY(-5px);
 }
 
 #tienda .producto-item::before {
@@ -1721,7 +1699,7 @@ footer {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(102, 126, 234, 0.95);
+    background: transparent;
     color: white;
     padding: 15px 30px;
     border-radius: 30px;
@@ -1731,6 +1709,7 @@ footer {
     z-index: 2;
     pointer-events: none;
     white-space: nowrap;
+    border: 3px solid rgba(255, 255, 255, 0.6);
 }
 
 #tienda .producto-item:hover::before {
@@ -1742,6 +1721,8 @@ footer {
     height: 300px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
 }
 
 #tienda .producto-item:hover img {
@@ -1750,6 +1731,7 @@ footer {
 
 #tienda .producto-info {
     padding: 20px;
+    background: transparent;
 }
 
 #tienda .producto-item h3 {
@@ -1907,7 +1889,7 @@ footer {
 }
 
 .modal-producto .caracteristica-item {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     color: white;
     padding: 15px;
     border-radius: 10px;
@@ -1928,7 +1910,7 @@ footer {
 .modal-producto .btn-comprar-modal {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     color: white;
     border: none;
     border-radius: 50px;
@@ -2012,7 +1994,7 @@ footer {
 
 .pdf-btn {
     padding: 12px 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     color: white;
     border: none;
     border-radius: 25px;
@@ -2106,7 +2088,7 @@ footer {
 
 .pdf-btn-small {
     padding: 8px 16px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     color: white;
     border: none;
     border-radius: 20px;
@@ -2157,7 +2139,7 @@ footer {
 }
 
 .page-number.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: transparent; border: 3px solid rgba(255, 255, 255, 0.4);
     border-color: white;
     transform: scale(1.15);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
@@ -2183,7 +2165,7 @@ footer {
 
 .pdf-container {
     position: relative;
-    background: white;
+    background: transparent;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -2348,3 +2330,4 @@ footer {
         min-height: 300px;
     }
 }
+
