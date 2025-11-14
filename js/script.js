@@ -342,6 +342,10 @@ async function checkPassword() {
         document.getElementById('adminPanel').style.display = 'block';
         document.getElementById('errorMsg').style.display = 'none';
         
+        // Limpiar caché para forzar actualización inmediata
+        statsCache.data = null;
+        statsCache.timestamp = 0;
+        
         // Cargar estadísticas
         await updateVisitStats();
     } else {
