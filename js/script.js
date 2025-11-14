@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========== SISTEMA DE VISITAS CON GOOGLE APPS SCRIPT ==========
 // Contador global usando Google Sheets como base de datos
 // Las visitas se registran en: https://docs.google.com (tu hoja de cálculo)
-const VISIT_API = 'https://script.google.com/macros/s/AKfycbxcioYEV41uNP557k2-nX4VxmD8WVg1Z3IuQQweXVSvrvl3pVxXQtQCgib22i7lHAmX/exec';
+const VISIT_API = 'https://script.google.com/macros/s/AKfycbyEJj1qMk5dsH-5xHrDsAYwci5tUOhCssdS1I6O5g6YvjbcPBDupX9N3RyX1-w2fScb/exec';
 
 async function initVisitSystem() {
     try {
