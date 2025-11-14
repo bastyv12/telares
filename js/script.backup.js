@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initVisitSystem();
 });
 
-// ========== SISTEMA DE VISITAS CON GOOGLE APPS SCRIPT ==========
-// Contador global usando Google Sheets como base de datos
-// Las visitas se registran en: https://docs.google.com (tu hoja de cálculo)
-const VISIT_API = 'https://script.google.com/macros/s/AKfycbxcioYEV41uNP557k2-nX4VxmD8WVg1Z3IuQQweXVSvrvl3pVxXQtQCgib22i7lHAmX/exec';
+// ========== SISTEMA DE VISITAS CON API EXTERNA ==========
+// Usar CountAPI.xyz - servicio gratuito de contador
+const VISIT_API = 'https://api.countapi.xyz/hit/telares-paulina/visits';
+const PAGE_API_BASE = 'https://api.countapi.xyz/hit/telares-paulina';
 
 async function initVisitSystem() {
     try {
@@ -51,7 +51,11 @@ async function initVisitSystem() {
 // Registrar visita de usuario único
 async function registerVisit() {
     try {
-        // Guardar localmente para historial
+        // Incrementar contador total usando API
+        const response = await fetch(VISIT_API);
+        const data = await response.json();
+        
+        // Guardar también localmente para historial
         let localVisits = JSON.parse(localStorage.getItem('telares_local_visits') || '[]');
         const visit = {
             timestamp: new Date().toISOString(),
@@ -61,25 +65,7 @@ async function registerVisit() {
         localVisits.push(visit);
         localStorage.setItem('telares_local_visits', JSON.stringify(localVisits));
         
-        // Registrar en servidor (Google Apps Script)
-        if (VISIT_API !== 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI') {
-            try {
-                const response = await fetch(VISIT_API + '?action=addVisit', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        type: 'visit',
-                        date: visit.date,
-                        time: visit.time,
-                        timestamp: visit.timestamp
-                    })
-                });
-                console.log('✅ Visita registrada globalmente');
-            } catch (error) {
-                console.log('ℹ️ Visita guardada solo localmente');
-            }
-        }
+        console.log('✅ Visita registrada:', data.value);
     } catch (error) {
         console.error('❌ Error al registrar visita:', error);
     }
@@ -88,7 +74,11 @@ async function registerVisit() {
 // Registrar visita a página específica
 async function registerPageVisit(pageName) {
     try {
-        // Guardar localmente
+        // Incrementar contador de página usando API
+        const response = await fetch(`${PAGE_API_BASE}/${pageName}`);
+        const data = await response.json();
+        
+        // Guardar también localmente para historial
         let localPageVisits = JSON.parse(localStorage.getItem('telares_local_page_visits') || '[]');
         const visit = {
             timestamp: new Date().toISOString(),
@@ -99,26 +89,7 @@ async function registerPageVisit(pageName) {
         localPageVisits.push(visit);
         localStorage.setItem('telares_local_page_visits', JSON.stringify(localPageVisits));
         
-        // Registrar en servidor
-        if (VISIT_API !== 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI') {
-            try {
-                await fetch(VISIT_API + '?action=addPageVisit', {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        type: 'page',
-                        page: pageName,
-                        date: visit.date,
-                        time: visit.time,
-                        timestamp: visit.timestamp
-                    })
-                });
-                console.log(`📄 Página ${pageName} registrada`);
-            } catch (error) {
-                // Silenciar error
-            }
-        }
+        console.log(`📄 Página ${pageName}: ${data.value} visitas`);
     } catch (error) {
         console.error(`❌ Error al registrar visita a ${pageName}:`, error);
     }
@@ -127,28 +98,14 @@ async function registerPageVisit(pageName) {
 // Actualizar estadísticas en el panel admin
 async function updateVisitStats() {
     try {
-        // Obtener visitas locales
+        // Obtener contador total de visitas desde API
+        const totalResponse = await fetch('https://api.countapi.xyz/get/telares-paulina/visits');
+        const totalData = await totalResponse.json();
+        const totalVisits = totalData.value || 0;
+        
+        // Obtener visitas locales para estadísticas de hoy y últimas visitas
         let localVisits = JSON.parse(localStorage.getItem('telares_local_visits') || '[]');
         let localPageVisits = JSON.parse(localStorage.getItem('telares_local_page_visits') || '[]');
-        
-        // Intentar obtener contador total desde servidor
-        let totalVisits = localVisits.length;
-        let useAPI = false;
-        
-        // Obtener datos del servidor si está configurado
-        if (VISIT_API !== 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI') {
-            try {
-                const response = await fetch(VISIT_API + '?action=getStats');
-                const data = await response.json();
-                
-                if (data && data.totalVisits) {
-                    totalVisits = data.totalVisits;
-                    useAPI = true;
-                }
-            } catch (error) {
-                // Usar datos locales
-            }
-        }
         
         // Calcular visitas de hoy (local)
         const today = new Date().toLocaleDateString('es-CL');
@@ -163,55 +120,28 @@ async function updateVisitStats() {
         const visitList = document.getElementById('visitList');
         visitList.innerHTML = '';
         
-        // Obtener estadísticas de cada página
+        // Obtener estadísticas de cada página desde API
         const pages = ['Inicio', 'Tienda', 'Productos', 'Catalogo', 'Contacto', 'Ubicacion', 'Galeria'];
-        const titulo = useAPI ? '📊 Visitas por Sección (Total Global):' : '📊 Visitas por Sección (Local):';
-        visitList.innerHTML += `<h4 style="color: #667eea; margin-bottom: 15px;">${titulo}</h4>`;
+        visitList.innerHTML += '<h4 style="color: #667eea; margin-bottom: 15px;">📊 Visitas por Sección (Total Global):</h4>';
         
-        if (useAPI) {
-            // Obtener desde servidor
+        for (const page of pages) {
             try {
-                const response = await fetch(VISIT_API + '?action=getPageStats');
-                const data = await response.json();
+                const pageResponse = await fetch(`https://api.countapi.xyz/get/telares-paulina/${page}`);
+                const pageData = await pageResponse.json();
+                const count = pageData.value || 0;
                 
-                if (data && data.pageStats) {
-                    pages.forEach(page => {
-                        const count = data.pageStats[page] || 0;
-                        const item = document.createElement('div');
-                        item.className = 'visit-item';
-                        item.style.background = 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)';
-                        item.innerHTML = `
-                            <strong>${page}</strong>
-                            <div style="font-size: 2rem; font-weight: bold; color: #667eea;">${count}</div>
-                            <small>visitas totales</small>
-                        `;
-                        visitList.appendChild(item);
-                    });
-                }
-            } catch (error) {
-                useAPI = false;
-            }
-        }
-        
-        if (!useAPI) {
-            // Usar estadísticas locales
-            const pageStats = {};
-            localPageVisits.forEach(v => {
-                pageStats[v.page] = (pageStats[v.page] || 0) + 1;
-            });
-            
-            pages.forEach(page => {
-                const count = pageStats[page] || 0;
                 const item = document.createElement('div');
                 item.className = 'visit-item';
                 item.style.background = 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)';
                 item.innerHTML = `
                     <strong>${page}</strong>
                     <div style="font-size: 2rem; font-weight: bold; color: #667eea;">${count}</div>
-                    <small>visitas locales</small>
+                    <small>visitas totales</small>
                 `;
                 visitList.appendChild(item);
-            });
+            } catch (error) {
+                console.error(`Error al obtener visitas de ${page}:`, error);
+            }
         }
 
         // Mostrar últimas visitas locales
@@ -439,6 +369,11 @@ function navigateTo(targetId) {
     
     // Scroll suave al inicio
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Cargar PDF si es catálogo
+    if (targetId === 'catalogo' && !pdfDoc) {
+        setTimeout(() => loadPDF(), 100);
+    }
 }
 
 // ========== BOTÓN VOLVER ARRIBA ==========
@@ -486,9 +421,202 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ========== VISOR DE PDF (usando object tag nativo) ==========
 // El PDF se visualiza directamente con el navegador usando <object>
-// No se necesita PDF.js ni canvas - el navegador maneja todo automáticamente
+// No se necesita PDF.js ni canvas
+// El navegador maneja todo automáticamente
 
 // ========== PRODUCTOS ==========
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        
+        const renderTask = page.render(renderContext);
+        
+        renderTask.promise.then(function() {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+                renderPage(pageNumPending);
+                pageNumPending = null;
+            }
+        });
+    });
+
+    document.getElementById('pageNum').textContent = num;
+    updatePageNumbers();
+    updatePageInput();
+}
+
+// Actualizar campo de entrada de página
+function updatePageInput() {
+    const pageInput = document.getElementById('pageInput');
+    if (pageInput && pdfDoc) {
+        pageInput.max = pdfDoc.numPages;
+        pageInput.value = pageNum;
+    }
+}
+
+// Ir a página específica desde input
+function goToPage() {
+    const pageInput = document.getElementById('pageInput');
+    if (!pageInput || !pdfDoc) return;
+    
+    const targetPage = parseInt(pageInput.value);
+    
+    if (targetPage >= 1 && targetPage <= pdfDoc.numPages) {
+        pageNum = targetPage;
+        queueRenderPage(pageNum);
+    } else {
+        alert(`Por favor ingrese un número entre 1 y ${pdfDoc.numPages}`);
+        pageInput.value = pageNum;
+    }
+}
+
+// Ir a página específica desde número clickeable
+function goToPageNumber(page) {
+    if (!pdfDoc || page < 1 || page > pdfDoc.numPages) return;
+    pageNum = page;
+    queueRenderPage(pageNum);
+}
+
+// Actualizar números de página clickeables
+function updatePageNumbers() {
+    if (!pdfDoc) return;
+    
+    const pageNumbersDiv = document.getElementById('pageNumbers');
+    if (!pageNumbersDiv) return;
+    
+    pageNumbersDiv.innerHTML = '';
+    
+    const totalPages = pdfDoc.numPages;
+    const currentPage = pageNum;
+    
+    // Mostrar máximo 7 números de página con elipsis
+    let pagesToShow = [];
+    
+    if (totalPages <= 7) {
+        // Mostrar todos los números
+        for (let i = 1; i <= totalPages; i++) {
+            pagesToShow.push(i);
+        }
+    } else {
+        // Siempre mostrar primera página
+        pagesToShow.push(1);
+        
+        if (currentPage > 3) {
+            pagesToShow.push('...');
+        }
+        
+        // Mostrar páginas alrededor de la actual
+        const start = Math.max(2, currentPage - 1);
+        const end = Math.min(totalPages - 1, currentPage + 1);
+        
+        for (let i = start; i <= end; i++) {
+            if (!pagesToShow.includes(i)) {
+                pagesToShow.push(i);
+            }
+        }
+        
+        if (currentPage < totalPages - 2) {
+            pagesToShow.push('...');
+        }
+        
+        // Siempre mostrar última página
+        if (!pagesToShow.includes(totalPages)) {
+            pagesToShow.push(totalPages);
+        }
+    }
+    
+    // Crear elementos
+    pagesToShow.forEach(page => {
+        const pageElement = document.createElement('div');
+        
+        if (page === '...') {
+            pageElement.className = 'page-number ellipsis';
+            pageElement.textContent = '...';
+        } else {
+            pageElement.className = 'page-number';
+            if (page === currentPage) {
+                pageElement.classList.add('active');
+            }
+            pageElement.textContent = page;
+            pageElement.onclick = () => goToPageNumber(page);
+        }
+        
+        pageNumbersDiv.appendChild(pageElement);
+    });
+}
+
+// Enter para ir a página
+document.addEventListener('DOMContentLoaded', function() {
+    const pageInput = document.getElementById('pageInput');
+    if (pageInput) {
+        pageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                goToPage();
+            }
+        });
+    }
+});
+
+// Encolar renderizado de página
+function queueRenderPage(num) {
+    if (pageRendering) {
+        pageNumPending = num;
+    } else {
+        renderPage(num);
+    }
+}
+
+// Página anterior
+function previousPage() {
+    if (pageNum <= 1) {
+        return;
+    }
+    pageNum--;
+    queueRenderPage(pageNum);
+}
+
+// Página siguiente
+function nextPage() {
+    if (!pdfDoc || pageNum >= pdfDoc.numPages) {
+        return;
+    }
+    pageNum++;
+    queueRenderPage(pageNum);
+}
+
+// Zoom in
+function zoomIn() {
+    scale += 0.25;
+    if (scale > 3) scale = 3;
+    queueRenderPage(pageNum);
+}
+
+// Zoom out
+function zoomOut() {
+    scale -= 0.25;
+    if (scale < 0.5) scale = 0.5;
+    queueRenderPage(pageNum);
+}
+
+// Navegación con teclado
+document.addEventListener('keydown', function(e) {
+    const catalogoSection = document.getElementById('catalogo');
+    if (catalogoSection && catalogoSection.classList.contains('activo')) {
+        if (e.key === 'ArrowLeft') {
+            previousPage();
+        } else if (e.key === 'ArrowRight') {
+            nextPage();
+        } else if (e.key === '+' || e.key === '=') {
+            zoomIn();
+        } else if (e.key === '-') {
+            zoomOut();
+        }
+    }
+});
 
 function agregarCarritoModal() {
   const titulo = document.getElementById('modalTitulo').textContent;
