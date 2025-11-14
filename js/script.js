@@ -124,6 +124,13 @@ async function registerPageVisit(pageName) {
     }
 }
 
+// Caché para evitar demasiadas peticiones
+let statsCache = {
+    data: null,
+    timestamp: 0,
+    ttl: 30000 // 30 segundos de caché
+};
+
 // Actualizar estadísticas en el panel admin
 async function updateVisitStats() {
     try {
@@ -135,22 +142,44 @@ async function updateVisitStats() {
         let totalVisits = localVisits.length;
         let useAPI = false;
         
-        // Obtener datos del servidor si está configurado
-        if (VISIT_API !== 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI') {
-            try {
-                const response = await fetch(VISIT_API + '?action=getStats', {
-                    method: 'GET',
-                    mode: 'cors',
-                    cache: 'no-cache'
-                });
-                const data = await response.json();
-                
-                if (data && data.totalVisits !== undefined) {
-                    totalVisits = data.totalVisits;
-                    useAPI = true;
+        // Usar caché si está disponible y es reciente
+        const now = Date.now();
+        if (statsCache.data && (now - statsCache.timestamp) < statsCache.ttl) {
+            totalVisits = statsCache.data.totalVisits || localVisits.length;
+            useAPI = true;
+            console.log('📦 Usando estadísticas en caché');
+        } else {
+        
+            // Obtener datos del servidor si está configurado
+            if (VISIT_API !== 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI') {
+                try {
+                    const response = await fetch(VISIT_API + '?action=getStats', {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'force-cache'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data && data.totalVisits !== undefined) {
+                        totalVisits = data.totalVisits;
+                        useAPI = true;
+                        // Guardar en caché
+                        statsCache.data = { totalVisits: data.totalVisits };
+                        statsCache.timestamp = now;
+                    }
+                } catch (error) {
+                    console.log('ℹ️ Usando datos locales:', error.message);
+                    // Si hay error 429, usar caché antigua si existe
+                    if (statsCache.data) {
+                        totalVisits = statsCache.data.totalVisits;
+                        useAPI = true;
+                    }
                 }
-            } catch (error) {
-                console.log('ℹ️ Usando datos locales para estadísticas:', error.message);
             }
         }
         
@@ -172,17 +201,43 @@ async function updateVisitStats() {
         const titulo = useAPI ? '📊 Visitas por Sección (Total Global):' : '📊 Visitas por Sección (Local):';
         visitList.innerHTML += `<h4 style="color: #667eea; margin-bottom: 15px;">${titulo}</h4>`;
         
-        if (useAPI) {
-            // Obtener desde servidor
+        if (useAPI && statsCache.data && statsCache.data.pageStats) {
+            // Usar pageStats del caché
+            pages.forEach(page => {
+                const count = statsCache.data.pageStats[page] || 0;
+                const item = document.createElement('div');
+                item.className = 'visit-item';
+                item.style.background = 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)';
+                item.innerHTML = `
+                    <strong>${page}</strong>
+                    <div style="font-size: 2rem; font-weight: bold; color: #667eea;">${count}</div>
+                    <small>visitas totales</small>
+                `;
+                visitList.appendChild(item);
+            });
+        } else if (useAPI) {
+            // Obtener desde servidor solo si no hay caché
             try {
                 const response = await fetch(VISIT_API + '?action=getPageStats', {
                     method: 'GET',
                     mode: 'cors',
-                    cache: 'no-cache'
+                    cache: 'force-cache'
                 });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
                 const data = await response.json();
                 
                 if (data && data.pageStats) {
+                    // Guardar en caché
+                    if (statsCache.data) {
+                        statsCache.data.pageStats = data.pageStats;
+                    } else {
+                        statsCache.data = { pageStats: data.pageStats };
+                    }
+                    
                     pages.forEach(page => {
                         const count = data.pageStats[page] || 0;
                         const item = document.createElement('div');
@@ -259,12 +314,12 @@ async function updateVisitStats() {
     }
 }
 
-// Actualizar estadísticas cada 10 segundos si está logueado
+// Actualizar estadísticas cada 60 segundos si está logueado (reducir peticiones)
 setInterval(() => {
     if (isLoggedIn) {
         updateVisitStats();
     }
-}, 10000);
+}, 60000);
 
 // ========== MODAL ADMINISTRACIÓN ==========
 function openAdminModal() {
