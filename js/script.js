@@ -138,15 +138,19 @@ async function updateVisitStats() {
         // Obtener datos del servidor si está configurado
         if (VISIT_API !== 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI') {
             try {
-                const response = await fetch(VISIT_API + '?action=getStats');
+                const response = await fetch(VISIT_API + '?action=getStats', {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
                 const data = await response.json();
                 
-                if (data && data.totalVisits) {
+                if (data && data.totalVisits !== undefined) {
                     totalVisits = data.totalVisits;
                     useAPI = true;
                 }
             } catch (error) {
-                // Usar datos locales
+                console.log('ℹ️ Usando datos locales para estadísticas:', error.message);
             }
         }
         
@@ -171,7 +175,11 @@ async function updateVisitStats() {
         if (useAPI) {
             // Obtener desde servidor
             try {
-                const response = await fetch(VISIT_API + '?action=getPageStats');
+                const response = await fetch(VISIT_API + '?action=getPageStats', {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
                 const data = await response.json();
                 
                 if (data && data.pageStats) {
@@ -189,6 +197,7 @@ async function updateVisitStats() {
                     });
                 }
             } catch (error) {
+                console.log('ℹ️ Error obteniendo estadísticas de páginas:', error.message);
                 useAPI = false;
             }
         }
