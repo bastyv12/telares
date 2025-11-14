@@ -26,7 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
     initVisitSystem();
 });
 
-// ========== SISTEMA DE VISITAS CON ALMACENAMIENTO PERSISTENTE ==========
+// ========== SISTEMA DE VISITAS CON API EXTERNA ==========
+// Usar CountAPI.xyz - servicio gratuito de contador
+const VISIT_API = 'https://api.countapi.xyz/hit/telares-paulina/visits';
+const PAGE_API_BASE = 'https://api.countapi.xyz/hit/telares-paulina';
+
 async function initVisitSystem() {
     try {
         // Registrar visita única por sesión
@@ -47,31 +51,21 @@ async function initVisitSystem() {
 // Registrar visita de usuario único
 async function registerVisit() {
     try {
-        // Obtener visitas actuales
-        let visits = [];
-        try {
-            const result = await window.storage.get('telares_visits', true);
-            if (result && result.value) {
-                visits = JSON.parse(result.value);
-            }
-        } catch (error) {
-            // Si no existe, se creará un nuevo array
-            visits = [];
-        }
+        // Incrementar contador total usando API
+        const response = await fetch(VISIT_API);
+        const data = await response.json();
         
-        // Agregar nueva visita
+        // Guardar también localmente para historial
+        let localVisits = JSON.parse(localStorage.getItem('telares_local_visits') || '[]');
         const visit = {
             timestamp: new Date().toISOString(),
             date: new Date().toLocaleDateString('es-CL'),
             time: new Date().toLocaleTimeString('es-CL')
         };
+        localVisits.push(visit);
+        localStorage.setItem('telares_local_visits', JSON.stringify(localVisits));
         
-        visits.push(visit);
-        
-        // Guardar en storage compartido
-        await window.storage.set('telares_visits', JSON.stringify(visits), true);
-        
-        console.log('✅ Visita registrada exitosamente');
+        console.log('✅ Visita registrada:', data.value);
     } catch (error) {
         console.error('❌ Error al registrar visita:', error);
     }
@@ -80,116 +74,105 @@ async function registerVisit() {
 // Registrar visita a página específica
 async function registerPageVisit(pageName) {
     try {
-        let pageVisits = [];
-        try {
-            const result = await window.storage.get('telares_page_visits', true);
-            if (result && result.value) {
-                pageVisits = JSON.parse(result.value);
-            }
-        } catch (error) {
-            pageVisits = [];
-        }
+        // Incrementar contador de página usando API
+        const response = await fetch(`${PAGE_API_BASE}/${pageName}`);
+        const data = await response.json();
         
+        // Guardar también localmente para historial
+        let localPageVisits = JSON.parse(localStorage.getItem('telares_local_page_visits') || '[]');
         const visit = {
             timestamp: new Date().toISOString(),
             date: new Date().toLocaleDateString('es-CL'),
             time: new Date().toLocaleTimeString('es-CL'),
             page: pageName
         };
+        localPageVisits.push(visit);
+        localStorage.setItem('telares_local_page_visits', JSON.stringify(localPageVisits));
         
-        pageVisits.push(visit);
-        await window.storage.set('telares_page_visits', JSON.stringify(pageVisits), true);
+        console.log(`📄 Página ${pageName}: ${data.value} visitas`);
     } catch (error) {
-        console.error('Error al registrar visita de página:', error);
+        console.error(`❌ Error al registrar visita a ${pageName}:`, error);
     }
 }
 
 // Actualizar estadísticas en el panel admin
 async function updateVisitStats() {
     try {
-        // Obtener visitas totales
-        let visits = [];
-        try {
-            const result = await window.storage.get('telares_visits', true);
-            if (result && result.value) {
-                visits = JSON.parse(result.value);
-            }
-        } catch (error) {
-            visits = [];
-        }
+        // Obtener contador total de visitas desde API
+        const totalResponse = await fetch('https://api.countapi.xyz/get/telares-paulina/visits');
+        const totalData = await totalResponse.json();
+        const totalVisits = totalData.value || 0;
         
-        // Calcular visitas de hoy
+        // Obtener visitas locales para estadísticas de hoy y últimas visitas
+        let localVisits = JSON.parse(localStorage.getItem('telares_local_visits') || '[]');
+        let localPageVisits = JSON.parse(localStorage.getItem('telares_local_page_visits') || '[]');
+        
+        // Calcular visitas de hoy (local)
         const today = new Date().toLocaleDateString('es-CL');
-        const todayVisits = visits.filter(v => v.date === today).length;
+        const todayVisits = localVisits.filter(v => v.date === today).length;
         
-        // Actualizar números
-        document.getElementById('totalVisits').textContent = visits.length;
+        // Actualizar números principales
+        document.getElementById('totalVisits').textContent = totalVisits;
         document.getElementById('todayVisits').textContent = todayVisits;
         document.getElementById('currentDate').textContent = today;
-        
-        // Obtener visitas por página
-        let pageVisits = [];
-        try {
-            const pageResult = await window.storage.get('telares_page_visits', true);
-            if (pageResult && pageResult.value) {
-                pageVisits = JSON.parse(pageResult.value);
-            }
-        } catch (error) {
-            pageVisits = [];
-        }
         
         // Actualizar lista de visitas
         const visitList = document.getElementById('visitList');
         visitList.innerHTML = '';
         
-        if (visits.length === 0) {
-            visitList.innerHTML = '<div class="visit-item">No hay visitas registradas aún</div>';
-            return;
-        }
-
-        // Estadísticas por página
-        const pageStats = {};
-        pageVisits.forEach(v => {
-            pageStats[v.page] = (pageStats[v.page] || 0) + 1;
-        });
-
-        visitList.innerHTML += '<h4 style="color: #667eea; margin-bottom: 15px;">📊 Visitas por Sección:</h4>';
-        for (const [page, count] of Object.entries(pageStats)) {
-            const item = document.createElement('div');
-            item.className = 'visit-item';
-            item.style.background = 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)';
-            item.innerHTML = `
-                <strong>${page}</strong>
-                <div style="font-size: 2rem; font-weight: bold; color: #667eea;">${count}</div>
-                <small>visitas totales</small>
-            `;
-            visitList.appendChild(item);
-        }
-
-        visitList.innerHTML += '<h4 style="color: #667eea; margin: 25px 0 15px 0;">🕒 Últimas Visitas por Sección:</h4>';
-        const recentPageVisits = pageVisits.slice(-20).reverse();
-        recentPageVisits.forEach(visit => {
-            const item = document.createElement('div');
-            item.className = 'visit-item';
-            item.innerHTML = `
-                <strong>${visit.page}</strong> - ${visit.date} a las ${visit.time}
-            `;
-            visitList.appendChild(item);
-        });
-
-        visitList.innerHTML += '<h4 style="color: #667eea; margin: 25px 0 15px 0;">👥 Visitantes Únicos:</h4>';
-        const recentVisits = visits.slice(-15).reverse();
-        recentVisits.forEach(visit => {
-            const item = document.createElement('div');
-            item.className = 'visit-item';
-            item.style.borderLeft = '5px solid #764ba2';
-            item.innerHTML = `
-                <strong>${visit.date}</strong> a las ${visit.time}
-            `;
-            visitList.appendChild(item);
-        });
+        // Obtener estadísticas de cada página desde API
+        const pages = ['Inicio', 'Tienda', 'Productos', 'Catalogo', 'Contacto', 'Ubicacion', 'Galeria'];
+        visitList.innerHTML += '<h4 style="color: #667eea; margin-bottom: 15px;">📊 Visitas por Sección (Total Global):</h4>';
         
-        console.log('📊 Estadísticas actualizadas');
+        for (const page of pages) {
+            try {
+                const pageResponse = await fetch(`https://api.countapi.xyz/get/telares-paulina/${page}`);
+                const pageData = await pageResponse.json();
+                const count = pageData.value || 0;
+                
+                const item = document.createElement('div');
+                item.className = 'visit-item';
+                item.style.background = 'linear-gradient(135deg, #667eea15 0%, #764ba215 100%)';
+                item.innerHTML = `
+                    <strong>${page}</strong>
+                    <div style="font-size: 2rem; font-weight: bold; color: #667eea;">${count}</div>
+                    <small>visitas totales</small>
+                `;
+                visitList.appendChild(item);
+            } catch (error) {
+                console.error(`Error al obtener visitas de ${page}:`, error);
+            }
+        }
+
+        // Mostrar últimas visitas locales
+        if (localPageVisits.length > 0) {
+            visitList.innerHTML += '<h4 style="color: #667eea; margin: 25px 0 15px 0;">🕒 Últimas Visitas (Locales):</h4>';
+            const recentPageVisits = localPageVisits.slice(-20).reverse();
+            recentPageVisits.forEach(visit => {
+                const item = document.createElement('div');
+                item.className = 'visit-item';
+                item.innerHTML = `
+                    <strong>${visit.page}</strong> - ${visit.date} a las ${visit.time}
+                `;
+                visitList.appendChild(item);
+            });
+        }
+
+        if (localVisits.length > 0) {
+            visitList.innerHTML += '<h4 style="color: #667eea; margin: 25px 0 15px 0;">👥 Visitantes Únicos (Locales):</h4>';
+            const recentVisits = localVisits.slice(-15).reverse();
+            recentVisits.forEach(visit => {
+                const item = document.createElement('div');
+                item.className = 'visit-item';
+                item.style.borderLeft = '5px solid #764ba2';
+                item.innerHTML = `
+                    <strong>${visit.date}</strong> a las ${visit.time}
+                `;
+                visitList.appendChild(item);
+            });
+        }
+        
+        console.log('📊 Estadísticas actualizadas - Total:', totalVisits);
     } catch (error) {
         console.error('Error al actualizar estadísticas:', error);
         document.getElementById('visitList').innerHTML = 
